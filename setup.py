@@ -1,25 +1,26 @@
 from random import randrange
-class Game:
-  def __init__(self):
-    self.player_1 = None
-    self.player_2 = None
+class Setup:
+  def __init__(self, party1, party2):
+    self.player_1 = party1
+    self.player_2 = party2
     self.initiative_list = []
     self.round_num = 1
     self.winner = None
   
 
   def __repr__(self):
-    return f'{self.first_player} fought against {self.second_player}. The winner was {self.winner}.'
+    return f'{self.player_1} fought against {self.player_2}. The winner was {self.winner}.'
 
+  '''
   def set_player(self, party, number):
     if number == '1':
       self.player_1 = party
     else:
       self.player_2 = party
-
+  '''
 
   def set_initiative_list(self):
-    soldiers_list += player_1.front_line + player_1.back_line + player_2.front_line + player_2.back_line
+    soldiers_list += self.player_1.front_line + self.player_1.back_line + self.player_2.front_line + self.player_2.back_line
 
     def quick_sort(self, list, start, end):
       if start >= end:

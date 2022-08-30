@@ -1,6 +1,6 @@
 from random import randrange
 from statistics import mean
-from data import spec_list, spec_keys, name_list, atr_list
+from data import spec_keys, name_list, atr_list
 from soldier import Soldier
 
 class Party:
@@ -67,21 +67,24 @@ class Party:
     soldier_spec = input("Choose soldier's specialistion (select a number): 0 - swordsman, 1 - defencer, 2 - archer, 3 - pikener: ")
     while soldier_spec not in ['0', '1', '2', '3']:
       print('choose a number from 0 to 3')
-      soldier_spec
+      soldier_spec = input("Choose soldier's specialistion (select a number): 0 - swordsman, 1 - defencer, 2 - archer, 3 - pikener: ")
     
-    newSoldier.set_spec(int(soldier_spec))
+    newSoldier.set_spec(spec_keys[int(soldier_spec)])
 
     print('Set attributes.')
+
     
     while newSoldier.atribute_points > 0:
+      print(f'{newSoldier.name} {newSoldier.has_spec()}. Attributes: {newSoldier.attack} attack, {newSoldier.defence} defence, {newSoldier.initiative} initiative')
       print(f"{newSoldier.atribute_points} attribute points left")
       attribute = input("Choose an attribute: (a)ttack, (d)effence, (i)nitiative ")
       while attribute not in atr_list:
         print("Choose one of these letters: a, d, i.")
-        attribute
+        attribute = input("Choose an attribute: (a)ttack, (d)effence, (i)nitiative ")
       newSoldier.set_atributes(attribute)
 
     self.add_soldier(newSoldier)
+  
 
 
 class CPUParty(Party):

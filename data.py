@@ -7,4 +7,3 @@ spec_keys = list(spec_list.keys())
 name_list = ['Woody', 'Stinky', 'Messy', 'Sleepy', 'Ugly', 'Annoying']
 
 atr_list = ['a', 'd', 'i']
-
