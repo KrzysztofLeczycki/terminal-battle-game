@@ -1,6 +1,7 @@
 from random import randrange
 from statistics import mean
-
+from data import spec_list, spec_keys, name_list, atr_list
+from soldier import Soldier
 
 class Party:
   def __init__(self, name):
@@ -57,7 +58,32 @@ class Party:
   def surrender(self):
     self.want_surrender = True
     print(f'It is enough for {self.name}!')
-  
+
+
+  def create_soldier(self):
+    soldier_name = input("Write soldier's name: ")
+    newSoldier = Soldier(soldier_name)
+
+    soldier_spec = input("Choose soldier's specialistion (select a number): 0 - swordsman, 1 - defencer, 2 - archer, 3 - pikener: ")
+    while soldier_spec not in ['0', '1', '2', '3']:
+      print('choose a number from 0 to 3')
+      soldier_spec
+    
+    newSoldier.set_spec(int(soldier_spec))
+
+    print('Set attributes.')
+    
+    while newSoldier.atribute_points > 0:
+      print(f"{newSoldier.atribute_points} attribute points left")
+      attribute = input("Choose an attribute: (a)ttack, (d)effence, (i)nitiative ")
+      while attribute not in atr_list:
+        print("Choose one of these letters: a, d, i.")
+        attribute
+      newSoldier.set_atributes(attribute)
+
+    self.add_soldier(newSoldier)
+
+
 class CPUParty(Party):
   
   def __init__(self, name):
@@ -70,6 +96,21 @@ class CPUParty(Party):
   def random_value(self, array):
     idx = randrange(len(array))
     return array[idx]
+
+  def create_cpu_soldier(self):
+    rand_name = self.random_value(name_list)
+    newSoldier = Soldier(rand_name)
+
+    rand_spec = self.random_value(spec_keys)
+    newSoldier.set_spec(rand_spec)
+
+    while newSoldier.atribute_points > 0:
+      rand_atribute = self.random_value(atr_list)
+      newSoldier.set_atributes(rand_atribute)
+
+    self.add_soldier(newSoldier)
+
+
 
   def choose_cpu_oponent(self, enemy_party, soldier):
     if soldier.range == 2 and enemy_party.back_protection == 0:
