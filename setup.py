@@ -11,18 +11,13 @@ class Setup:
   def __repr__(self):
     return f'{self.player_1} fought against {self.player_2}. The winner was {self.winner}.'
 
-  '''
-  def set_player(self, party, number):
-    if number == '1':
-      self.player_1 = party
-    else:
-      self.player_2 = party
-  '''
 
   def set_initiative_list(self):
+    soldiers_list = []
     soldiers_list += self.player_1.front_line + self.player_1.back_line + self.player_2.front_line + self.player_2.back_line
-
-    def quick_sort(self, list, start, end):
+    print(soldiers_list)
+    '''
+    def quick_sort(list, start, end):
       if start >= end:
         return
       
@@ -41,7 +36,7 @@ class Setup:
       quick_sort(list, less_than_pointer + 1, end)
 
     self.initiative_list = quick_sort(soldiers_list, 0, len(soldiers_list))
-
+    '''
 
   def choose_soldier(self, input):
     idx = int(input) - 1
@@ -51,6 +46,7 @@ class Setup:
   def show_board(self):
     character_string = list(map(lambda soldier: f'{self.initiative_list.index(soldier) + 1}: {soldier.party} - {soldier.name}', self.initiative_list))
     inititive_string = ' * '.join(character_string)
+    print(character_string)
     print(
       f'''
       xxxxx {self.round_num} xxxxx

@@ -51,9 +51,9 @@ class Party:
 
   def back_in_range(self):
     if len(self.front_line) == 0:
-      for i in range(len(self.back_line)):
-        self.front_line.append(self.back_line.pop(i))
-      print('Changed position!')
+      while len(self.back_line) > 0:
+        self.front_line.append(self.back_line.pop())
+      print('First line is empty. Position is changed!')
 
   def surrender(self):
     self.want_surrender = True
@@ -70,7 +70,7 @@ class Party:
       soldier_spec = input("Choose soldier's specialistion (select a number): 0 - swordsman, 1 - defencer, 2 - archer, 3 - pikener: ")
     
     newSoldier.set_spec(spec_keys[int(soldier_spec)])
-
+    newSoldier.set_party(self.name)
     print('Set attributes.')
 
     
@@ -89,7 +89,7 @@ class Party:
 
 class CPUParty(Party):
   
-  def __init__(self, name):
+  def __init__(self):
     super().__init__('The Bots')
     self.is_cpu = True
 
@@ -110,6 +110,7 @@ class CPUParty(Party):
     while newSoldier.atribute_points > 0:
       rand_atribute = self.random_value(atr_list)
       newSoldier.set_atributes(rand_atribute)
+      newSoldier.set_party(self.name)
 
     self.add_soldier(newSoldier)
 
