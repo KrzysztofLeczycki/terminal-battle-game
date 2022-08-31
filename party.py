@@ -8,8 +8,9 @@ class Party:
     self.name = name
     self.front_line = []
     self.back_line = []
+    self.all_soldiers = self.front_line + self.back_line
     self.back_protection = 0
-    self.has_soldiers = len(self.front_line + self.back_line)
+    self.has_soldiers = len(self.all_soldiers)
     self.want_surrender = False
     self.is_cpu = False
   
@@ -113,7 +114,6 @@ class CPUParty(Party):
       newSoldier.set_party(self.name)
 
     self.add_soldier(newSoldier)
-
 
 
   def choose_cpu_oponent(self, enemy_party, soldier):
