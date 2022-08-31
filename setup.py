@@ -46,16 +46,17 @@ class Setup:
 
 
   def show_board(self):
+    self.set_initiative_list()
     character_string = list(map(lambda soldier: f'{self.initiative_list.index(soldier) + 1}: {soldier.party} - {soldier.name}', self.initiative_list))
     inititive_string = ' * '.join(character_string)
-    
+    print(self.initiative_list)
     def joining_fun(arr):
       representation = list(map(lambda soldier: f'{soldier.name} - {soldier.specialization} {soldier.health}/10 HP', arr))
       return ' | '.join(representation)
     
     print(
       f'''
-      xxxxx {self.round_num} xxxxx
+      xxxxx Round {self.round_num} xxxxx
       *** Initiative ***
       ** {inititive_string} **
 
