@@ -1,3 +1,4 @@
+from ntpath import join
 from random import randrange
 class Setup:
   def __init__(self, party1, party2):
@@ -9,7 +10,7 @@ class Setup:
   
 
   def __repr__(self):
-    return f'{self.player_1} fought against {self.player_2}. The winner was {self.winner}.'
+    return f'{self.player_1} fought against {self.player_2}. The winner is {self.winner}.'
 
 
   def set_initiative_list(self):
@@ -37,6 +38,7 @@ class Setup:
 
     self.initiative_list = quick_sort(soldiers_list, 0, len(soldiers_list))
     '''
+    self.initiative_list = soldiers_list # for testing
 
   def choose_soldier(self, input):
     idx = int(input) - 1
@@ -46,7 +48,11 @@ class Setup:
   def show_board(self):
     character_string = list(map(lambda soldier: f'{self.initiative_list.index(soldier) + 1}: {soldier.party} - {soldier.name}', self.initiative_list))
     inititive_string = ' * '.join(character_string)
-    print(character_string)
+    
+    def joining_fun(arr):
+      representation = list(map(lambda soldier: f'{soldier.name} - {soldier.specialization} {soldier.health}/10 HP', arr))
+      return ' | '.join(representation)
+    
     print(
       f'''
       xxxxx {self.round_num} xxxxx
@@ -55,13 +61,13 @@ class Setup:
 
       -- {self.player_1.name} --
       - back-line -
-      {' | '.join(self.player_1.back_line)}
+      {joining_fun(self.player_1.back_line)}
       - front-line -
-      {' | '.join(self.player_1.front_line)}
-      - - - - - - - - - - - - - - - - - - - 
-      {' | '.join(self.player_2.front_line)}
+      {joining_fun(self.player_1.front_line)}
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+      {joining_fun(self.player_2.front_line)}
       - front-line -
-      {' | '.join(self.player_2.back_line)}
+      {joining_fun(self.player_2.back_line)}
       - back-line -
       -- {self.player_2.name} --
       ''')
