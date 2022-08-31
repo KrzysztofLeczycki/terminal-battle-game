@@ -1,4 +1,3 @@
-from ntpath import join
 from random import randrange
 class Setup:
   def __init__(self, party1, party2):
@@ -74,6 +73,14 @@ class Setup:
       -- {self.player_2.name} --
       ''')
 
+  def player_actions(self, soldier): #w trakcie pisania
+    print(f'Current soldier {soldier}')
+    choose_action = input('Choose your action: 1 - attack the enemy, 2 - get information about any soldier, 3 - surrender.')
+
+    if choose_action == '1':
+      target = int(input("Choose an enemy's number from the initiative list"))
+      enemy = self.initiative_list[target - 1]
+      enemy.be_attacked()
 
   def set_round(self):
     self.round_num += 1
