@@ -76,7 +76,7 @@ class Soldier:
         damage = enemy.attack - (self.defence + my_party.back_protection) // 2
       else:
         damage = enemy.attack - self.defence // 2
-      print(f'{self.name} had {self.health} HP and lost {damage} HP.')
+      print(f'{self.name} had {self.health} HP and lost {damage} HP. \n')
       self.health -= damage
       self.is_dead()
       my_party.delete_soldier(self)

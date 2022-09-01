@@ -3,7 +3,7 @@ from party import Party, CPUParty
 from setup import Setup
   
 
-# Helper functions
+# Helper function
 def create_unit(num, party):
   if party.is_cpu == False:
     for i in range(num):
@@ -59,6 +59,14 @@ def run_game():
   board = Setup(party1, party2)
   #print(board)
   board.show_board()
+
+  while board.winner is None:
+    board.run_turn()
+    board.set_round()
   
+  play_again = input('Do yo want to play again? (y): ')
+  if play_again == 'y':
+    run_game()
+
 
 run_game()

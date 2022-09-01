@@ -73,21 +73,67 @@ class Setup:
       -- {self.player_2.name} --
       ''')
 
-  def player_actions(self, soldier): #w trakcie pisania
+  def player_actions(self, soldier):
     print(f'Current soldier {soldier}')
-    choose_action = input('Choose your action: 1 - attack the enemy, 2 - get information about any soldier, 3 - surrender.')
+    choose_action = input('Choose your action: 1 - attack the enemy, 2 - get information about any soldier, 3 - surrender.: ')
 
     if choose_action == '1':
-      target = int(input("Choose an enemy's number from the initiative list"))
+      target = int(input("Choose an enemy's number from the initiative list.: "))
       enemy = self.initiative_list[target - 1]
-      enemy.be_attacked()
+      if enemy.party == self.player_1.name:
+        enemy_party = self.player_1
+      else:
+        enemy_party = self.player_2
+      enemy.be_attacked(soldier, enemy_party)
+    elif choose_action == '2':
+      target = int(input("Choose an soldier's number from the initiative list.: "))
+      print(self.initiative_list[target - 1])
+      self.player_actions(soldier)
+    elif choose_action == '3':
+      if soldier.party == self.player_1.name:
+        self.player_1.surrender()
+      elif soldier.party == self.player_2.name:
+        self.player_2.surrender()
+      self.set_winner()
+      return 'finish'
+    else:
+      print('Choose proper action')
+      self.player_actions(soldier)
+
+  def run_turn(self):
+    self.set_initiative_list()
+    for soldier in self.initiative_list:
+      self.show_board()
+      # Check if player_2 is cpu
+      if soldier in self.player_2.all_soldiers and self.player_2.is_cpu:
+        print(f'{self.player_2.name} never surrender!')
+        target = self.player_2.choose_cpu_oponent(self.player_1, soldier)
+        print(target.name)
+        #target.be_attacked(self.player_1, soldier)
+      else:
+        do_or_finish = self.player_actions(soldier)
+        if do_or_finish == 'finish': return
+      self.party_destroyed()
 
   def set_round(self):
     self.round_num += 1
 
   def set_winner(self):
-    if self.player_1.has_soldiers == 0 or self.player_1.want_surrender:
+    if (self.player_1.want_surrender):
       self.winner = self.player_2.name
-    elif self.player_2.has_soldiers == 0 or self.player_2.want_surrender: 
+    elif (self.player_2.want_surrender): 
       self.winner = self.player_1.name
     print(f'{self.winner } won the game!')
+    return
+
+  def party_destroyed(self):
+    if (self.player_1.has_soldiers == 0):
+      self.winner = self.player_2.name
+    elif (self.player_2.has_soldiers == 0): 
+      self.winner = self.player_1.name
+    else:
+      return
+    print(f'{self.winner } won the game!')
+    return
+  
+
