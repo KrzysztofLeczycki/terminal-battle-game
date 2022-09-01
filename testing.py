@@ -1,4 +1,3 @@
-import array
 from party import Party, CPUParty
 from soldier import Soldier
 from setup import Setup
@@ -26,4 +25,5 @@ board = Setup(new2, new)
 
 #print(board.initiative_list)
 board.show_board()
-
+board.player_actions(board.initiative_list[0])
+board.show_board()
