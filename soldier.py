@@ -68,6 +68,10 @@ class Soldier:
       self.position = 1
       print(f'{my_party.name} lost all soldiers in front-line. Back-line is within direct range')
 
+  def change_pikener_range(self):
+    if self.specialization == 'pikener':
+      self.range = 2
+
   def be_attacked(self, enemy, my_party):
     self.reduce_position(my_party)
     my_party.back_in_range()
