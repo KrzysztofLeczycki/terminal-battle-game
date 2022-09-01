@@ -127,7 +127,7 @@ class CPUParty(Party):
     self.add_soldier(newSoldier)
 
 
-  def choose_cpu_oponent(self, enemy_party, soldier):
+  def choose_cpu_oponent(self, enemy_party, soldier): #poprawić fuknkcję, żeby cpu nie strzelał w puste pola
     if soldier.range == 2 and enemy_party.back_protection == 0:
       return self.random_value(enemy_party.back_line)
     return self.random_value(enemy_party.front_line)

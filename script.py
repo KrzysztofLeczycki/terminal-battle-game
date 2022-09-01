@@ -63,6 +63,7 @@ def run_game():
   while board.winner is None:
     board.run_turn()
     board.set_round()
+    board.set_turn(True)
   
   play_again = input('Do yo want to play again? (y): ')
   if play_again == 'y':

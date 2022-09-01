@@ -5,6 +5,7 @@ class Setup:
     self.player_2 = party2
     self.initiative_list = []
     self.round_num = 1
+    self.turn_num = 1
     self.winner = None
   
 
@@ -48,29 +49,31 @@ class Setup:
   def show_board(self):
     self.set_initiative_list()
     character_string = list(map(lambda soldier: f'{self.initiative_list.index(soldier) + 1}: {soldier.party} - {soldier.name}', self.initiative_list))
-    inititive_string = ' * '.join(character_string)
+    inititive_string = '   * '.join(character_string)
     
     def joining_fun(arr):
       representation = list(map(lambda soldier: f'{soldier.name} - {soldier.specialization} {soldier.health}/10 HP', arr))
-      return ' | '.join(representation)
+      return '   |   '.join(representation)
     
     print(
       f'''
-      xxxxx Round {self.round_num} xxxxx
+      xxxxxxxx Round {self.round_num} xxxxxxxx
+         xxxxx Turn {self.turn_num} xxxxx
       *** Initiative ***
       ** {inititive_string} **
 
       -- {self.player_1.name} --
-      - back-line -
-      {joining_fun(self.player_1.back_line)}
-      - front-line -
-      {joining_fun(self.player_1.front_line)}
+      
+      back:   {joining_fun(self.player_1.back_line)}
+    
+      front:  {joining_fun(self.player_1.front_line)}
       - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
-      {joining_fun(self.player_2.front_line)}
-      - front-line -
-      {joining_fun(self.player_2.back_line)}
-      - back-line -
+      front:  {joining_fun(self.player_2.front_line)}
+      
+      back:   {joining_fun(self.player_2.back_line)}
+      
       -- {self.player_2.name} --
+
       ''')
 
   def player_actions(self, soldier):
@@ -105,18 +108,29 @@ class Setup:
     for soldier in self.initiative_list:
       self.show_board()
       # Check if player_2 is cpu
+      if soldier.health < 1:
+        continue
       if soldier in self.player_2.all_soldiers and self.player_2.is_cpu:
         print(f'{self.player_2.name} never surrender!')
         target = self.player_2.choose_cpu_oponent(self.player_1, soldier)
-        print(target.name)
-        #target.be_attacked(self.player_1, soldier)
+        target.be_attacked(soldier, self.player_1)
       else:
         do_or_finish = self.player_actions(soldier)
         if do_or_finish == 'finish': return
-      self.party_destroyed()
+      
+      is_finished = self.party_destroyed()
+      if is_finished: break
+      self.set_turn()
 
   def set_round(self):
     self.round_num += 1
+
+  def set_turn(self, new_round=False):
+    if new_round: 
+      self.turn_num = 1
+    else:
+      self.turn_num += 1
+
 
   def set_winner(self):
     if (self.player_1.want_surrender):
@@ -134,6 +148,6 @@ class Setup:
     else:
       return
     print(f'{self.winner } won the game!')
-    return
+    return True
   
 
