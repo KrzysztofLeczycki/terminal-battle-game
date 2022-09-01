@@ -45,11 +45,12 @@ class Setup:
     idx = int(input) - 1
     return self.initiative_list[idx]
 
+  def initiative_stringify(self):
+    character_string = list(map(lambda soldier: f'{self.initiative_list.index(soldier) + 1}: {soldier.party} - {soldier.name}', self.initiative_list))
+    return '   * '.join(character_string)
 
   def show_board(self):
     self.set_initiative_list()
-    character_string = list(map(lambda soldier: f'{self.initiative_list.index(soldier) + 1}: {soldier.party} - {soldier.name}', self.initiative_list))
-    inititive_string = '   * '.join(character_string)
     
     def joining_fun(arr):
       representation = list(map(lambda soldier: f'{soldier.name} - {soldier.specialization} {soldier.health}/10 HP', arr))
@@ -59,8 +60,9 @@ class Setup:
       f'''
       xxxxxxxx Round {self.round_num} xxxxxxxx
          xxxxx Turn {self.turn_num} xxxxx
+
       *** Initiative ***
-      ** {inititive_string} **
+      ** {self.initiative_stringify()} **
 
       -- {self.player_1.name} --
       
@@ -81,6 +83,7 @@ class Setup:
     choose_action = input('Choose your action: 1 - attack the enemy, 2 - get information about any soldier, 3 - surrender.: ')
 
     if choose_action == '1':
+      print(f'Initiative list (watch out on friendly fire): {self.initiative_stringify()}')
       target = int(input("Choose an enemy's number from the initiative list.: "))
       enemy = self.initiative_list[target - 1]
       if enemy.party == self.player_1.name:
@@ -147,6 +150,7 @@ class Setup:
       self.winner = self.player_1.name
     else:
       return
+    print("The last enemy's soldier is down!")
     print(f'{self.winner } won the game!')
     return True
   
