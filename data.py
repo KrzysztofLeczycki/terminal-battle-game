@@ -4,6 +4,6 @@ spec_list = {  "swordsman": {"attack": 3, "defence": 1, "initiative": 2, "positi
   "pikener": {"attack": 2, "defence": 1, "initiative": 1, "position": 2, "range": 1, "protect_back": False}}
 spec_keys = list(spec_list.keys())
 
-name_list = ['Woody', 'Stinky', 'Messy', 'Sleepy', 'Ugly', 'Annoying']
+name_list = ['Woody', 'Stinky', 'Messy', 'Sleepy', 'Ugly', 'Annoying', 'Crazy', 'Clumsy', 'Muddy']
 
 atr_list = ['a', 'd', 'i']

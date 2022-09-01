@@ -115,7 +115,8 @@ class CPUParty(Party):
     return array[idx]
 
   def create_cpu_soldier(self):
-    rand_name = self.random_value(name_list)
+    # Choose random name from name_list
+    rand_name = name_list.pop(randrange(len(name_list)))
     newSoldier = Soldier(rand_name)
 
     rand_spec = self.random_value(spec_keys)
