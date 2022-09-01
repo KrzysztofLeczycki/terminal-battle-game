@@ -1,3 +1,4 @@
+from operator import index
 from random import randrange
 class Setup:
   def __init__(self, party1, party2):
@@ -16,7 +17,6 @@ class Setup:
   def set_initiative_list(self):
     soldiers_list = []
     soldiers_list += self.player_1.front_line + self.player_1.back_line + self.player_2.front_line + self.player_2.back_line
-    print(soldiers_list)
     
     def quick_sort(list, start, end):
       if start >= end:
@@ -81,20 +81,29 @@ class Setup:
   def player_actions(self, soldier):
     print(f'Current soldier {soldier}')
     choose_action = input('Choose your action: 1 - attack the enemy, 2 - get information about any soldier, 3 - surrender.: ')
+    print('\n')
 
     if choose_action == '1':
       print(f'Initiative list (watch out on friendly fire): {self.initiative_stringify()}')
       target = int(input("Choose an enemy's number from the initiative list.: "))
       enemy = self.initiative_list[target - 1]
+      if self.initiative_list.index(soldier) == target -1:
+        print('You are an idiot! Your are trying to hit yourself! Do something different.')
+        self.player_actions(soldier)
       if enemy.party == self.player_1.name:
         enemy_party = self.player_1
       else:
         enemy_party = self.player_2
       enemy.be_attacked(soldier, enemy_party)
+      self.player_1.back_in_range()
+      self.player_2.back_in_range()
+
     elif choose_action == '2':
       target = int(input("Choose an soldier's number from the initiative list.: "))
       print(self.initiative_list[target - 1])
+      print('\n')
       self.player_actions(soldier)
+
     elif choose_action == '3':
       if soldier.party == self.player_1.name:
         self.player_1.surrender()

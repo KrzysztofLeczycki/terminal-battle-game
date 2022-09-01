@@ -7,7 +7,7 @@ from setup import Setup
 def create_unit(num, party):
   if party.is_cpu == False:
     for i in range(num):
-      print(f"Create soldier number {i + 1}")
+      print(f"Create soldier number {i + 1}/n")
       party.create_soldier()
 
   else:
@@ -40,11 +40,13 @@ def run_game():
 
   # Player 2 settings
   opponent = input("Choose your opponent: (h)uman, (c)omputer: ")
+  print('\n')
   while opponent not in ['h', 'c']:
     print("Write 'c' or 'h'")
     opponent = input("Choose your opponent: (h)uman, (c)omputer: ")
 
   print('Party 2 settings!')
+  print('\n')
   if opponent == 'h':
     party2_name = input("Write your party's name: ")
     party2 = Party(party2_name)
