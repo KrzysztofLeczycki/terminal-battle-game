@@ -8,9 +8,9 @@ class Party:
     self.name = name
     self.front_line = []
     self.back_line = []
-    self.all_soldiers = self.front_line + self.back_line
+    self.all_soldiers = []
     self.back_protection = 0
-    self.has_soldiers = len(self.all_soldiers)
+    self.has_soldiers = 0
     self.want_surrender = False
     self.is_cpu = False
   
@@ -26,6 +26,8 @@ class Party:
 
   def add_soldier(self, soldier):
     soldier.set_party(self.name)
+    self.all_soldiers.append(soldier)
+    self.has_soldiers = len(self.all_soldiers)
     if soldier.position == 1:
       self.front_line.append(soldier)
       if soldier.protect_back:
@@ -41,6 +43,9 @@ class Party:
     elif not soldier.alive and soldier in self.back_line:
       index = self.back_line.index(soldier)
       self.back_line.pop(index)
+    self.all_soldiers = []
+    self.all_soldiers = self.front_line + self.back_line
+    self.has_soldiers = len(self.all_soldiers)
     
   def set_back_protection(self):
     defencer_list = list(filter(lambda soldier: (soldier.protect_back), self.front_line))
@@ -52,9 +57,15 @@ class Party:
 
   def back_in_range(self):
     if len(self.front_line) == 0:
+      temp = []
       while len(self.back_line) > 0:
-        self.front_line.append(self.back_line.pop())
+        soldier_to_move = self.back_line.pop()
+        soldier_to_move.reduce_position(self)
+        soldier_to_move.change_pikener_range()
+        temp.append(soldier_to_move)
+      self.front_line += temp
       print('First line is empty. Position is changed!')
+   
 
   def surrender(self):
     self.want_surrender = True
@@ -116,7 +127,7 @@ class CPUParty(Party):
     self.add_soldier(newSoldier)
 
 
-  def choose_cpu_oponent(self, enemy_party, soldier):
+  def choose_cpu_oponent(self, enemy_party, soldier): #poprawić fuknkcję, żeby cpu nie strzelał w puste pola
     if soldier.range == 2 and enemy_party.back_protection == 0:
       return self.random_value(enemy_party.back_line)
     return self.random_value(enemy_party.front_line)

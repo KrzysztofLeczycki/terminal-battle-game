@@ -61,12 +61,16 @@ class Soldier:
       print(f'{self.name} bytes the dust.')
 
   def can_attack(self, enemy):
-    return enemy.range >= self.position
+    return not (enemy.range == 1 and self.position == 2) 
 
   def reduce_position(self, my_party):
     if self.position == 2 and len(my_party.front_line) == 0:
       self.position = 1
       print(f'{my_party.name} lost all soldiers in front-line. Back-line is within direct range')
+
+  def change_pikener_range(self):
+    if self.specialization == 'pikener':
+      self.range = 2
 
   def be_attacked(self, enemy, my_party):
     self.reduce_position(my_party)
@@ -76,6 +80,7 @@ class Soldier:
         damage = enemy.attack - (self.defence + my_party.back_protection) // 2
       else:
         damage = enemy.attack - self.defence // 2
+      if damage <= 0: damage = 1
       print(f'{self.name} had {self.health} HP and lost {damage} HP. \n')
       self.health -= damage
       self.is_dead()
