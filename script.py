@@ -7,7 +7,7 @@ from setup import Setup
 def create_unit(num, party):
   if party.is_cpu == False:
     for i in range(num):
-      print(f"Create soldier number {i + 1}/n")
+      print(f"\nCreate soldier number {i + 1}")
       party.create_soldier()
 
   else:
@@ -22,7 +22,7 @@ def create_unit(num, party):
 
 # Main function
 def run_game():
-  print('Welcome to the Battle Game! \n')
+  print('\n***** Welcome to the Battle Game! ***** \n')
   
   # Set the number of soldiers in each unit
   soldiers_num = int(input("Write a number of soldiers in unit (max 6): "))
@@ -32,7 +32,7 @@ def run_game():
 
 
   # Player 1 settings
-  print('Party 1 settings!')
+  print('\nParty 1 settings!')
   party1_name = input("Write your party's name: ")
   party1 = Party(party1_name)
   
@@ -45,8 +45,8 @@ def run_game():
     print("Write 'c' or 'h'")
     opponent = input("Choose your opponent: (h)uman, (c)omputer: ")
 
-  print('Party 2 settings!')
-  print('\n')
+  print('Party 2 settings! \n')
+  
   if opponent == 'h':
     party2_name = input("Write your party's name: ")
     party2 = Party(party2_name)
@@ -59,13 +59,13 @@ def run_game():
 
   # new Setup instance - creating new board
   board = Setup(party1, party2)
-  #print(board)
-  board.show_board()
+  board.set_initiative_list()
 
   while board.winner is None:
     board.run_turn()
     board.set_round()
     board.set_turn(True)
+    board.set_initiative_list()
   
   play_again = input('Do yo want to play again? (y): ')
   if play_again == 'y':

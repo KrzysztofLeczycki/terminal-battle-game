@@ -45,12 +45,14 @@ class Setup:
     idx = int(input) - 1
     return self.initiative_list[idx]
 
+
   def initiative_stringify(self):
     character_string = list(map(lambda soldier: f'{self.initiative_list.index(soldier) + 1}: {soldier.party} - {soldier.name}', self.initiative_list))
     return '   * '.join(character_string)
 
+
   def show_board(self):
-    self.set_initiative_list()
+    #self.set_initiative_list()
     
     def joining_fun(arr):
       representation = list(map(lambda soldier: f'{soldier.name} - {soldier.specialization} {soldier.health}/10 HP', arr))
@@ -78,8 +80,9 @@ class Setup:
 
       ''')
 
+
   def player_actions(self, soldier):
-    print(f'Current soldier {soldier}')
+    
     choose_action = input('Choose your action: 1 - attack the enemy, 2 - get information about any soldier, 3 - surrender.: ')
     print('\n')
 
@@ -99,6 +102,7 @@ class Setup:
       self.player_2.back_in_range()
 
     elif choose_action == '2':
+      print(f'Initiative list: {self.initiative_stringify()}')
       target = int(input("Choose an soldier's number from the initiative list.: "))
       print(self.initiative_list[target - 1])
       print('\n')
@@ -122,6 +126,7 @@ class Setup:
       # Check if player_2 is cpu
       if soldier.health < 1:
         continue
+      print(f'Current soldier {soldier}')
       if soldier in self.player_2.all_soldiers and self.player_2.is_cpu:
         print(f'{self.player_2.name} never surrender!')
         target = self.player_2.choose_cpu_oponent(self.player_1, soldier)

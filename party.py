@@ -76,7 +76,7 @@ class Party:
     soldier_name = input("Write soldier's name: ")
     newSoldier = Soldier(soldier_name)
 
-    soldier_spec = input("Choose soldier's specialistion (select a number): 0 - swordsman, 1 - defencer, 2 - archer, 3 - pikener: ")
+    soldier_spec = input("\nChoose soldier's specialistion (select a number): 0 - swordsman, 1 - defencer, 2 - archer, 3 - pikener: ")
     while soldier_spec not in ['0', '1', '2', '3']:
       print('choose a number from 0 to 3')
       soldier_spec = input("Choose soldier's specialistion (select a number): 0 - swordsman, 1 - defencer, 2 - archer, 3 - pikener: ")
@@ -84,7 +84,7 @@ class Party:
     
     newSoldier.set_spec(spec_keys[int(soldier_spec)])
     newSoldier.set_party(self.name)
-    print('Set attributes.')
+    print('\nSet attributes.')
 
     
     while newSoldier.atribute_points > 0:
