@@ -38,6 +38,7 @@ class Setup:
       quick_sort(list, less_than_pointer + 1, end)
 
     quick_sort(soldiers_list, 0, len(soldiers_list)-1)
+
     self.initiative_list = soldiers_list
  
 
@@ -46,20 +47,27 @@ class Setup:
     return self.initiative_list[idx]
 
 
-  def initiative_stringify(self):
-    character_string = list(map(lambda soldier: f'{self.initiative_list.index(soldier) + 1}: {soldier.party} - {soldier.name}', self.initiative_list))
-    return '   * '.join(character_string)
-
-
-  def show_board(self):
-    #self.set_initiative_list()
+  def initiative_stringify(self, enemy_only=False, current_soldier=None):
+    if not enemy_only:
+      character_list = list(map(lambda soldier: f'{self.initiative_list.index(soldier) + 1}: {soldier.party} - {soldier.name}', self.initiative_list))
+      return '   * '.join(character_list)
+    else:
+      filtered_list = []
+      for soldier in self.initiative_list:
+        if soldier.party != current_soldier.party and soldier.alive:
+          key = self.initiative_list.index(soldier) + 1
+          filtered_list.append(f'{key}: {soldier.name} ({soldier.specialization})')
+      return '   * '.join(filtered_list)
     
+
+  def show_board(self): 
     def joining_fun(arr):
       representation = list(map(lambda soldier: f'{soldier.name} - {soldier.specialization} {soldier.health}/10 HP', arr))
       return '   |   '.join(representation)
     
     print(
       f'''
+
       xxxxxxxx Round {self.round_num} xxxxxxxx
          xxxxx Turn {self.turn_num} xxxxx
 
@@ -81,25 +89,32 @@ class Setup:
       ''')
 
 
+  def reset_front_line(self):
+    self.player_1.back_in_range()
+    self.player_2.back_in_range()
+
+
   def player_actions(self, soldier):
     
     choose_action = input('Choose your action: 1 - attack the enemy, 2 - get information about any soldier, 3 - surrender.: ')
     print('\n')
 
     if choose_action == '1':
-      print(f'Initiative list (watch out on friendly fire): {self.initiative_stringify()}')
+      print(f'Initiative list (watch out on friendly fire): {self.initiative_stringify(enemy_only=True, current_soldier=soldier)}')
       target = int(input("Choose an enemy's number from the initiative list.: "))
       enemy = self.initiative_list[target - 1]
       if self.initiative_list.index(soldier) == target -1:
         print('You are an idiot! Your are trying to hit yourself! Do something different.')
+        self.player_actions(soldier)
+      if not enemy.alive:
+        print(f"{enemy.name} is dead enough, so let him rest in piece. Do something different.")
         self.player_actions(soldier)
       if enemy.party == self.player_1.name:
         enemy_party = self.player_1
       else:
         enemy_party = self.player_2
       enemy.be_attacked(soldier, enemy_party)
-      self.player_1.back_in_range()
-      self.player_2.back_in_range()
+      self.reset_front_line()
 
     elif choose_action == '2':
       print(f'Initiative list: {self.initiative_stringify()}')
@@ -120,8 +135,8 @@ class Setup:
       self.player_actions(soldier)
 
   def run_turn(self):
-    self.set_initiative_list()
     for soldier in self.initiative_list:
+      self.reset_front_line()
       self.show_board()
       # Check if player_2 is cpu
       if soldier.health < 1:

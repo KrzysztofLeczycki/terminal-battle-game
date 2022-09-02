@@ -32,6 +32,8 @@ board = Setup(new2, new)
 board.set_initiative_list()
 
 while board.winner is None:
+  print(f'ZOBACZMY KOŃCOWĄ LINIĘ GRACZA {new2.back_line}')
   board.run_turn()
   board.set_round()
   board.set_turn(True)
+

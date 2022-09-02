@@ -31,7 +31,9 @@ class Soldier:
   ############# 
 
   def __repr__(self):
-    return f'{self.name}{self.has_spec()} has {self.health}/10 HP. Attributes: {self.attack} attack, {self.defence} defence, {self.initiative} initiative, {self.range} range. {self.can_protect()}'
+    return f'''{self.name}{self.has_spec()} has {self.health}/10 HP. 
+                Attributes: {self.attack} attack, {self.defence} defence, {self.initiative} initiative, {self.range} range. {self.can_protect()}'''
+
 
   def set_spec(self, spec):
     spec_index = spec_keys.index(spec)
@@ -43,6 +45,7 @@ class Soldier:
     self.range = spec_list[spec]['range']
     self.protect_back = spec_list[spec]['protect_back']
 
+
   def set_atributes(self, key):
     if key == 'a':
       self.attack += 1
@@ -52,25 +55,32 @@ class Soldier:
       self.initiative += 1
     self.atribute_points -= 1
 
+
   def set_party(self, my_party):
     self.party = my_party
+
 
   def is_dead(self):
     if self.health <= 0:
       self.alive = False
       print(f'{self.name} bytes the dust.')
 
+
   def can_attack(self, enemy):
     return not (enemy.range == 1 and self.position == 2) 
+
 
   def reduce_position(self, my_party):
     if self.position == 2 and len(my_party.front_line) == 0:
       self.position = 1
-      print(f'{my_party.name} lost all soldiers in front-line. Back-line is within direct range')
+      print(f'{my_party.name} lost all soldiers in front-line. {self.name} is within direct range now.')
+      
+
 
   def change_pikener_range(self):
     if self.specialization == 'pikener':
       self.range = 2
+
 
   def be_attacked(self, enemy, my_party):
     self.reduce_position(my_party)
