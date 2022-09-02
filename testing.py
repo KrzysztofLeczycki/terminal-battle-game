@@ -1,6 +1,6 @@
 from party import Party, CPUParty
 from soldier import Soldier
-from setup import Setup
+from gameplay import Gameplay
 from random import randrange
 
 #new = Party('GUYS')
@@ -26,7 +26,7 @@ new.create_cpu_soldier()
 new.create_cpu_soldier()
 new.create_cpu_soldier()
 
-board = Setup(new2, new)
+board = Gameplay(new2, new)
 board.set_initiative_list()
 
 while board.winner is None:

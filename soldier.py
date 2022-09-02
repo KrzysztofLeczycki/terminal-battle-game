@@ -1,20 +1,28 @@
 from data import spec_list, spec_keys
 
+## Soldier class controls abbilities and behaviour 
 class Soldier:
   def __init__(self, name):
     self.name = name
-    self.specialization = None
+    self.party = None
+    # Each soldier has equal number of atributes points
     self.atribute_points = 4
+    # Each soldier has equal number of health points
     self.health = 10
+    self.alive = True
+    # Thera are 4 specializations: swordsman, defencer, archer and pikiner. See more details in data.py
+    self.specialization = None
+    # Attack, defence and initiative are depended on specialization. 
+    # They can be improved by spending atribute points
     self.attack = 1
     self.defence = 1
-    self.initiative = 1
-    self.position = None
-    self.range = 1
+    self.initiative = 1 # Places soldier in 'initiative list'
+    #
+    # These attributes are dependent only on specialization
+    self.position = None # Soldiers stands on one from two lines: front and back
+    self.range = 1 # 
     self.protect_back = False
-    self.alive = True
-    self.party = None
-
+    
 
   def __repr__(self):
 
