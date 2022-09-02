@@ -1,4 +1,3 @@
-from soldier import Soldier
 from party import Party, CPUParty
 from setup import Setup
   
@@ -35,8 +34,7 @@ def run_game():
   print('\nParty 1 settings!')
   party1_name = input("Write your party's name: ")
   party1 = Party(party1_name)
-  
-  create_unit(soldiers_num, party1)
+  party1.create_unit(soldiers_num)
 
   # Player 2 settings
   opponent = input("Choose your opponent: (h)uman, (c)omputer: ")
@@ -50,12 +48,11 @@ def run_game():
   if opponent == 'h':
     party2_name = input("Write your party's name: ")
     party2 = Party(party2_name)
-    
-    create_unit(soldiers_num, party2)
+    party2.create_unit(soldiers_num)
     
   else:
     party2 = CPUParty()
-    create_unit(soldiers_num, party2)
+    party2.create_unit(soldiers_num)
 
   # new Setup instance - creating new board
   board = Setup(party1, party2)

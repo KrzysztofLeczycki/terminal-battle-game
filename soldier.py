@@ -15,24 +15,17 @@ class Soldier:
     self.alive = True
     self.party = None
 
- ############# 
- # __repr__ helper functions
-  def has_spec(self):
-    if self.specialization:
-      return f', the {self.specialization}'
-
-  def can_protect(self):
-    if self.protect_back:
-      return f'{self.name} protects back-line against arrows'
-    elif self.position == 1:
-      return f'{self.name} does not protect back-line against arrows'
-   
-  
-  ############# 
 
   def __repr__(self):
-    return f'''{self.name}{self.has_spec()} has {self.health}/10 HP. 
-                Attributes: {self.attack} attack, {self.defence} defence, {self.initiative} initiative, {self.range} range. {self.can_protect()}'''
+
+    def can_protect():
+      if self.protect_back:
+        return f'{self.name} protects back-line against arrows'
+      else: 
+        return ''    
+
+    return f'''{self.name}, the {self.specialization} has {self.health}/10 HP. 
+                Attributes: {self.attack} attack, {self.defence} defence, {self.initiative} initiative, {self.range} range. {can_protect()}'''
 
 
   def set_spec(self, spec):
@@ -66,7 +59,7 @@ class Soldier:
       print(f'{self.name} bytes the dust.')
 
 
-  def can_attack(self, enemy):
+  def can_be_attacked(self, enemy):
     return not (enemy.range == 1 and self.position == 2) 
 
 
@@ -76,7 +69,6 @@ class Soldier:
       print(f'{my_party.name} lost all soldiers in front-line. {self.name} is within direct range now.')
       
 
-
   def change_pikener_range(self):
     if self.specialization == 'pikener':
       self.range = 2
@@ -85,7 +77,7 @@ class Soldier:
   def be_attacked(self, enemy, my_party):
     self.reduce_position(my_party)
     my_party.back_in_range()
-    if self.can_attack(enemy):
+    if self.can_be_attacked(enemy):
       if self.position == 2 and enemy.specialization == 'archer':
         damage = enemy.attack - (self.defence + my_party.back_protection) // 2
       else:
