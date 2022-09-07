@@ -47,20 +47,20 @@ def run_game():
   # In this list each soldier is placed according to his initiative
   board.set_initiative_list()
 
-  # Main battle loop. Game ends, when one player has no soldiers in team.
-  # It is possible to surrender and immediatly finish game (See gameplay.py). Note: Cpu player figths to its last soldier.
+  # Main battle loop. The game ends, when one player has no soldiers in the team.
+  # It is possible to surrender and immediately finish game (See gameplay.py). Note: Cpu player fights to its last soldier.
   while board.winner is None:
     # Function triggers displaying board and players actions
     board.run_turn()
     board.set_round()
     # Turns counter resets, when each soldier has done an action if he was alive
     board.set_turn(True)
-    # Gameplay method is calleed again to remove dead soldiers from 'initiative list' before next rounds
-    # Note: It is possible to eleminate soldier before his move, so initiative is important
+    # Gameplay method is called again to remove dead soldiers from 'the initiative list' before the next rounds
+    # Note: It is possible to eliminate a soldier before his move, so the initiative is important
     board.set_initiative_list()
   
   # Run game once again if you wish
-  play_again = input('Do yo want to play again? (y): ')
+  play_again = input('Do you want to play again? (y): ')
   if play_again == 'y':
     run_game()
 

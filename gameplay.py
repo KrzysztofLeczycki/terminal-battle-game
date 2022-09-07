@@ -1,22 +1,29 @@
 from random import randrange
+
+# The Gameplay class controls players' moves and delivers information  
 class Gameplay:
+  # The constructor function
   def __init__(self, party1, party2):
     self.player_1 = party1
     self.player_2 = party2
+    # From the initiative_list is picked current soldier's object
     self.initiative_list = []
     self.round_num = 1
     self.turn_num = 1
     self.winner = None
   
 
+  # The representaion method
   def __repr__(self):
     return f'{self.player_1} fought against {self.player_2}. The winner is {self.winner}.'
 
 
+  # The method sets soldiers in list in the initiative order
   def set_initiative_list(self):
     soldiers_list = []
     soldiers_list += self.player_1.front_line + self.player_1.back_line + self.player_2.front_line + self.player_2.back_line
     
+    # The quicksort algorithm used to set soldiers in the correct order
     def quick_sort(list, start, end):
       if start >= end:
         return
@@ -41,10 +48,14 @@ class Gameplay:
     self.initiative_list = soldiers_list
  
 
+  # The helper method returns a representation of the initiative_list as a string
   def initiative_stringify(self, enemy_only=False, current_soldier=None):
+    # Return a string with all soldriers fighting in a round
     if not enemy_only:
       character_list = list(map(lambda soldier: f'{self.initiative_list.index(soldier) + 1}: {soldier.party} - {soldier.name}', self.initiative_list))
       return '   * '.join(character_list)
+    
+    # Return a string with all alived enemy's soldiers
     else:
       filtered_list = []
       for soldier in self.initiative_list:
@@ -54,12 +65,16 @@ class Gameplay:
       return '   * '.join(filtered_list)
 
 
+  # The method returns a soldier picked up by a player
   def choose_soldier(self, input):
     idx = int(input) - 1
     return self.initiative_list[idx]
 
 
+  # The method prints the board in terminal with such inforamation as: the round and the turn numbers, the inititive list, soldiers positions
   def show_board(self): 
+
+    # The helper function returns string with information about soldiers standing on one line
     def joining_fun(arr):
       representation = list(map(lambda soldier: f'{soldier.name} - {soldier.specialization} {soldier.health}/10 HP', arr))
       return '   |   '.join(representation)
