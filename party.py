@@ -158,7 +158,7 @@ class Party:
       while len(self.back_line) > 0:
         soldier_to_move = self.back_line.pop()
         soldier_to_move.reduce_position(self)
-        soldier_to_move.change_pikeman_range()
+        soldier_to_move.change_pikener_range()
         temp.append(soldier_to_move)
       self.front_line += temp
       print('First line is empty. Position is changed!')

@@ -7,11 +7,12 @@ def run_game():
   print('\n***** Welcome to the Battle Game! ***** \n')
   
   # Set the number of soldiers in each unit
-  soldiers_num = int(input("Write a number of soldiers in unit (max 6): "))
+  soldiers_num_str = input("Write a number of soldiers in unit (max 6): ")
   # Protect against bad key choice
-  while soldiers_num not in range(1, 7): 
+  while soldiers_num_str not in ['1', '2', '3', '4', '5', '6']: 
     print("Write a number from 1 to 6")
-    soldiers_num = int(input("Write a number of soldiers in unit (max 6): "))
+    soldiers_num_str = input("Write a number of soldiers in unit (max 6): ")
+  soldiers_num = int(soldiers_num_str)
 
   # Player 1 settings
   print('\nParty 1 settings!')
